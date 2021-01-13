@@ -1,31 +1,32 @@
-1. List the following details of each employee: employee number, last name, first name, gender, and salary.
+1. SELECT actor_id, first_name FROM actor;
+To select particular columns we can name the columns.
 
-SELECT employees.emp_no, employees.last_name, employees.first_name, employees.gender, salaries.salary FROM employees JOIN salaries ON employees.emp_no = salaries.emp_no;
+2. SELECT customer_id, store_id FROM customer;
+To select particular columns we can name the columns.
 
-2. List employees who were hired in 1986.
+3. SELECT * FROM customer;
+If we want all of the columns, we can use * as shorthand.
 
-SELECT * from employees WHERE cast(hire_date as varchar) LIKE '1986%';
+4. SELECT customer_id, store_id, first_name, last_name FROM customer LIMIT 5;
+Instead of getting all rows, we can specify a limit of the number of rows to retrieve.
 
-3. List the manager of each department with the following information: department number, department name, the manager's employee number, last name, first name, and start and end employment dates.
+5. SELECT customer_id, store_id, first_name, last_name FROM customer LIMIT 5 OFFSET 10;
+We can skip rows that would normally be at the beginning of the result set with offset. 
+This is useful usually when we sort the result set in a particular order, something we’ll get to later.
 
-SELECT departments.dept_no, departments.dept_name, dept_manager.emp_no, employees.last_name, employees.first_name, dept_manager.from_date, dept_manager.to_date FROM departments JOIN dept_manager ON departments.dept_no = dept_manager.dept_no JOIN employees ON dept_manager.emp_no = employees.emp_no;
+6. SELECT * FROM customer WHERE store_id=2;
+we can select rows from customer that have a store_id=2.
 
-4. List the department of each employee with the following information: employee number, last name, first name, and department name.
+7. SELECT * FROM actor WHERE first_name='Julia';
+Get a list of actors with the first name Julia.
 
-SELECT dept_emp.emp_no, employees.last_name, employees.first_name, departments.dept_name FROM dept_emp JOIN employees ON dept_emp.emp_no = employees.emp_no JOIN departments ON dept_emp.dept_no = departments.dept_no;
+8. SELECT * FROM actor WHERE first_name IN ('Chris', 'Cameron', 'Cuba');
+Get a list of actors with the first name Chris, Cameron, or Cuba.
 
-5. List all employees whose first name is "Hercules" and last names begin with "B."
+9. SELECT * FROM customer WHERE first_name='Jamie' AND last_name='Rice';
+Select the row from customer for customer named Jamie Rice.
 
-SELECT first_name, last_name FROM employees WHERE first_name = 'Hercules' AND last_name LIKE 'B%';
+10. SELECT amount, payment_date FROM payment WHERE amount < 1;
+Select amount and payment_date from payment where the amount paid was less than $1.
 
-6. List all employees in the Sales department, including their employee number, last name, first name, and department name.
 
-SELECT dept_emp.emp_no, employees.last_name, employees.first_name, departments.dept_name FROM dept_emp JOIN employees ON dept_emp.emp_no = employees.emp_no JOIN departments ON dept_emp.dept_no = departments.dept_no WHERE departments.dept_name = 'Sales';
-
-7. List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name.
-
-SELECT dept_emp.emp_no, employees.last_name, employees.first_name, departments.dept_name FROM dept_emp JOIN employees ON dept_emp.emp_no = employees.emp_no JOIN departments ON dept_emp.dept_no = departments.dept_no WHERE departments.dept_name = 'Sales' OR departments.dept_name = 'Development';
-
-8. In descending order, list the frequency count of employee last names, i.e., how many employees share each last name.
-
-SELECT last_name, COUNT(last_name) AS "frequency" FROM employees GROUP BY last_name ORDER BY COUNT(last_name) DESC;
